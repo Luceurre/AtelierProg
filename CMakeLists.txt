@@ -1,0 +1,9 @@
+CMAKE_MINIMUM_REQUIRED(VERSION 3.15)
+SET(CMAKE_CXX_STANDARD 20)
+PROJECT(AtelierProg)
+
+FIND_PACKAGE(SDL2 REQUIRED)
+
+add_executable(Test main.cpp)
+
+target_link_libraries(Test SDL2::SDL2)
