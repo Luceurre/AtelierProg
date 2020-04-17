@@ -13,7 +13,7 @@ int main(int argc, char* argv[]) {
         cout << argv[i] << endl;
     }
 
-    Logger::info("Le programme se termine.");
+    Logger::warn("Le programme se termine.");
 
     return 0;
 }
