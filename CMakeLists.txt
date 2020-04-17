@@ -4,6 +4,6 @@ PROJECT(AtelierProg)
 
 FIND_PACKAGE(SDL2 REQUIRED)
 
-add_executable(API_Tests main.cpp API/Scene.cpp API/Scene.h API/SceneLogic.cpp API/SceneLogic.h API/SceneView.cpp API/SceneView.h API/SceneState.h API/Logger.h)
+add_executable(API_Tests main.cpp API/Logger.cpp API/Logger.h)
 
 target_link_libraries(API_Tests SDL2::SDL2)
