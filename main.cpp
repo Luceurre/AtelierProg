@@ -3,17 +3,11 @@
 //
 
 #include <iostream>
-#include "API/Logger.h"
+#include "API/Scene.h"
 
 using namespace std;
 
 int main(int argc, char* argv[]) {
-    for(int i = 0; i < argc; ++i) {
-        cout << "Vous m'avez donné comme argument numéro " << i << " : ";
-        cout << argv[i] << endl;
-    }
-
-    Logger::warn("Le programme se termine.");
-
+    Scene *test = new Scene();
     return 0;
 }

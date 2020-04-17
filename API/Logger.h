@@ -6,12 +6,12 @@
 #define ATELIERPROG_LOGGER_H
 
 #include <string>
-#include <iostream>
 #include <mutex>
+#include <iostream>
+#include <sstream>
 
-using namespace std;
-
-namespace Logger {
+class Logger {
+protected:
     enum LogLevel {
         INFO,
         WARNING,
@@ -19,66 +19,30 @@ namespace Logger {
         FATAL
     };
 
-    // Pour permettre que les messages s'envoient dans le bon ordre.
-    mutex mtx;
-    LogLevel currentLevel = LogLevel::INFO;
+    static LogLevel logLevel;
+    static std::mutex mtx;
 
-    // Rajoute le type de message, les timesstamps, etc...
-    string& parse_log_message(LogLevel ll, string& msg);
+    // Generate a string that can describe the class. Should be override.
+    static std::string descriptor();
+
+    // Generate s string that can describe the object (by default memory address).
+    std::string object_descriptor();
+
+    // Generate a string that describe the error level.
+    static std::string error_descriptor(LogLevel ll);
+
+    // Modifie le message pour le rendre plus compréhensible, ajoute les infos sur l'objet, la date, etc...
+    void parse_log_message(LogLevel ll, std::string& msg);
 
     // Ajoute au log le message en fonction de la sévérité.
-    void log(LogLevel ll, string& msg);
+    void log(LogLevel ll, std::string& msg);
 
     // Des p'tites fonctions pour éviter d'avoir à spécifier le niveau de log du message.
-    void info(string& msg);
-    void warn(string& msg);
-    void error(string& msg);
-    void fatal(string& msg);
+    void info(std::string& msg);
+    void warn(std::string& msg);
+    void error(std::string& msg);
+    void fatal(std::string& msg);
+};
 
-    const char* parse_log_message(Logger::LogLevel ll, const char* msg) {
-        switch (ll) {
-            case INFO:
-                cout << "[INFO] " ;
-                break;
-
-            case WARNING:
-                cout << "[WARNING] ";
-                break;
-
-            case ERROR:
-                cout << "[ERROR] ";
-                break;
-            case FATAL:
-                cout << "[FATAL]";
-                break;
-            default:
-                cout << "";
-        }
-        return msg;
-    }
-
-    void log(Logger::LogLevel ll, const char* msg) {
-        if(ll >= Logger::currentLevel) {
-            const lock_guard<mutex> lock(mtx);
-            cout << parse_log_message(ll, msg) << endl;
-        }
-    }
-
-    void info(const char* msg) {
-        Logger::log(Logger::LogLevel::INFO, msg);
-    }
-
-    void warn(const char* msg) {
-        Logger::log(Logger::LogLevel::WARNING, msg);
-    }
-
-    void error(const char* msg) {
-        Logger::log(Logger::LogLevel::ERROR, msg);
-    }
-
-    void fatal(const char* msg) {
-        Logger::log(Logger::LogLevel::FATAL, msg);
-    }
-}
 
 #endif //ATELIERPROG_LOGGER_H
