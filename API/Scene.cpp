@@ -13,13 +13,20 @@ void Scene::set_state(SceneState newSceneState) {
 }
 
 Scene::Scene() {
-    sceneState = CREATED;
-    std::string log_msg = "Scene CREATED";
-    this->info(log_msg);
+
 }
 
 std::string Scene::descriptor() {
     return "(Scene)";
+}
+
+Scene::Scene(SceneView* sceneView, SceneLogic* sceneLogic) {
+    this->sceneLogic = sceneLogic;
+    this->sceneView = sceneView;
+    this->sceneState = CREATED;
+
+    std::string log_msg = "Scene CREATED";
+    this->info(log_msg);
 }
 
 std::string scene_state_descriptor(SceneState sceneState) {
