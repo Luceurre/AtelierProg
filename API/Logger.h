@@ -23,7 +23,7 @@ protected:
     static std::mutex mtx;
 
     // Generate a string that can describe the class. Should be override.
-    static std::string descriptor();
+    virtual std::string descriptor();
 
     // Generate s string that can describe the object (by default memory address).
     std::string object_descriptor();

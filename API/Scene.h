@@ -21,10 +21,13 @@ enum SceneState {
 
 std::string scene_state_descriptor(SceneState sceneState);
 
-class Scene : Logger {
+class Scene : protected Logger {
 public:
     Scene();
     void set_state(SceneState newSceneState);
+
+protected:
+    std::string descriptor() override;
 private:
     // L'état dans lequel se trouve la scène.
     SceneState sceneState;

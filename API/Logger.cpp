@@ -14,7 +14,7 @@ std::string Logger::descriptor() {
 std::string Logger::object_descriptor() {
     std::stringstream ss;
     ss << this;
-    return "{" + ss.str() + "} ";
+    return "{" + ss.str() + "}";
 }
 
 std::string Logger::error_descriptor(Logger::LogLevel ll) {

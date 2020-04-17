@@ -6,16 +6,20 @@
 
 void Scene::set_state(SceneState newSceneState) {
     // TODO : add some logging here
-    std::string log_msg = "Changement d'état de la scène.";
+    std::string log_msg = "Scene went from " + scene_state_descriptor(this->sceneState) + " to " + scene_state_descriptor(newSceneState);
     this->log(Logger::LogLevel::INFO, log_msg);
 
     this->sceneState = newSceneState;
 }
 
 Scene::Scene() {
-    std::string msg = "Hello World!";
     sceneState = CREATED;
-    this->info(msg);
+    std::string log_msg = "Scene CREATED";
+    this->info(log_msg);
+}
+
+std::string Scene::descriptor() {
+    return "(Scene)";
 }
 
 std::string scene_state_descriptor(SceneState sceneState) {

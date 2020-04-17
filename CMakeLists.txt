@@ -1,10 +1,15 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.15)
 SET(CMAKE_CXX_STANDARD 20)
+SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 PROJECT(AtelierProg)
 
 FIND_PACKAGE(SDL2 REQUIRED)
+FIND_PACKAGE(SDL2_image REQUIRED)
 
-add_executable(API_Tests main.cpp API/Scene.cpp API/Scene.h Sandbox/Singleton.cpp Sandbox/Singleton.h API/Logger.cpp API/Logger.h)
-add_executable(Sandbox main.cpp Sandbox/Singleton.cpp Sandbox/Singleton.h API/Logger.cpp API/Logger.h)
+include_directories(${SDL2_INCLUDE_DIRS} ${SDL2_IMAGE_INCLUDE_DIRS})
 
-target_link_libraries(API_Tests SDL2::SDL2)
+add_executable(PierreSandbox main_pierre.cpp API/Logger.cpp API/Logger.h API/Scene.cpp API/Scene.h)
+add_executable(JulienSandbox main_julien.cpp)
+
+
+target_link_libraries(PierreSandbox ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})
