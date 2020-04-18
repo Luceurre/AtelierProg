@@ -5,7 +5,8 @@
 #ifndef ATELIERPROG_GAME_H
 #define ATELIERPROG_GAME_H
 
-#include <SDL2/SDL.h>
+#include <SDL.h>
+#include "SDL_image.h"
 #include <iostream>
 
 class Game {
@@ -22,11 +23,12 @@ public:
     void clean();
 
     bool running() {return isRunning;}
+
+    static SDL_Renderer *renderer;
 private:
     int cnt;
     bool isRunning;
     SDL_Window *window;
-    SDL_Renderer *renderer;
 };
 
 #endif //ATELIERPROG_GAME_H
