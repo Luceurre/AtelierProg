@@ -33,7 +33,7 @@ std::string Logger::error_descriptor(Logger::LogLevel ll) {
 }
 
 void Logger::parse_log_message(Logger::LogLevel ll, std::string& msg) {
-    msg = error_descriptor(ll) + " " + descriptor() + " " + object_descriptor() + " " + msg;
+    msg = error_descriptor(ll) + " " + descriptor() + " " + object_descriptor() + " " + Logger::timestamp() + " " + msg;
 }
 
 void Logger::log(Logger::LogLevel ll, std::string& msg) {
@@ -58,4 +58,8 @@ void Logger::error(std::string& msg) {
 
 void Logger::fatal(std::string& msg) {
     this->log(Logger::LogLevel::FATAL, msg);
+}
+
+std::string Logger::timestamp() {
+    return "(" + std::to_string(SDL_GetTicks()) + ")";
 }

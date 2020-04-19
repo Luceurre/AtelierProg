@@ -9,6 +9,7 @@
 #include <mutex>
 #include <iostream>
 #include <sstream>
+#include <SDL.h>
 
 class Logger {
 protected:
@@ -21,6 +22,8 @@ protected:
 
     static LogLevel logLevel;
     static std::mutex mtx;
+
+    static std::string timestamp();
 
     // Generate a string that can describe the class. Should be override.
     virtual std::string descriptor();
