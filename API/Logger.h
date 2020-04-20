@@ -6,7 +6,7 @@
 #define ATELIERPROG_LOGGER_H
 
 #include <string>
-#include <mutex>
+// #include <mutex>
 #include <iostream>
 #include <sstream>
 #include <SDL.h>
@@ -21,15 +21,13 @@ protected:
     };
 
     static LogLevel logLevel;
-    static std::mutex mtx;
+    // static std::mutex mtx;
 
     static std::string timestamp();
+    static std::string pointer_str(void* ptr);
 
     // Generate a string that can describe the class. Should be override.
     virtual std::string descriptor();
-
-    // Generate s string that can describe the object (by default memory address).
-    std::string object_descriptor();
 
     // Generate a string that describe the error level.
     static std::string error_descriptor(LogLevel ll);
@@ -45,6 +43,8 @@ protected:
     void warn(std::string& msg);
     void error(std::string& msg);
     void fatal(std::string& msg);
+    // Generate s string that can describe the object (by default memory address).
+    std::string object_descriptor();
 };
 
 

@@ -45,6 +45,8 @@ public:
     SceneState get_state();
     // Charge les images et les données relatives à la scène.
     virtual int initialize();
+    // Quitte la scène, libère la mémoire.
+    virtual int quit();
     // Lance 3 threads -> run_model, run_view et run_controller
     virtual int run();
 

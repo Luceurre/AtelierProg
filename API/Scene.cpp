@@ -5,7 +5,7 @@
 #include "Scene.h"
 
 void Scene::set_state(SceneState newSceneState) {
-    const std::lock_guard<std::mutex> lock(this->mtx_state);
+    // const std::lock_guard<std::mutex> lock(this->mtx_state);
 
     std::string log_msg = "Scene went from " + scene_state_descriptor(this->sceneState) + " to " + scene_state_descriptor(newSceneState);
     this->log(Logger::LogLevel::INFO, log_msg);
@@ -54,6 +54,8 @@ int Scene::run() {
     this->thread_model.join();
     this->thread_view.join();
     this->thread_controller.join();
+
+    this->quit();
 
     return 0;
 }
@@ -163,6 +165,10 @@ void Scene::set_model_refresh_rate(int model_refresh_rate) {
 
     this->model_refresh_rate = model_refresh_rate;
     this->model_loop_time_ms = 1000 / model_refresh_rate;
+}
+
+int Scene::quit() {
+    return 0;
 }
 
 std::string scene_state_descriptor(SceneState sceneState) {

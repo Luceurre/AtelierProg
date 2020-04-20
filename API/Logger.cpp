@@ -5,16 +5,14 @@
 #include "Logger.h"
 
 Logger::LogLevel Logger::logLevel = Logger::LogLevel::INFO;
-std::mutex Logger::mtx;
+// std::mutex Logger::mtx;
 
 std::string Logger::descriptor() {
     return "(You didn't changed the descriptor!)";
 }
 
 std::string Logger::object_descriptor() {
-    std::stringstream ss;
-    ss << this;
-    return "{" + ss.str() + "}";
+    return Logger::pointer_str(this);
 }
 
 std::string Logger::error_descriptor(Logger::LogLevel ll) {
@@ -38,7 +36,7 @@ void Logger::parse_log_message(Logger::LogLevel ll, std::string& msg) {
 
 void Logger::log(Logger::LogLevel ll, std::string& msg) {
     if(ll >= Logger::logLevel) {
-        const std::lock_guard<std::mutex> lock(Logger::mtx);
+        // const std::lock_guard<std::mutex> lock(Logger::mtx);
         this->parse_log_message(ll, msg);
         std::cout << msg << std::endl;
     }
@@ -62,4 +60,10 @@ void Logger::fatal(std::string& msg) {
 
 std::string Logger::timestamp() {
     return "(" + std::to_string(SDL_GetTicks()) + ")";
+}
+
+std::string Logger::pointer_str(void* ptr) {
+    std::stringstream ss;
+    ss << ptr;
+    return "{" + ss.str() + "}";
 }

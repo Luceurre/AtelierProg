@@ -1,17 +1,14 @@
 //
 // Created by pglandon on 4/17/20.
 //
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_timer.h>
+
 #include "Tests/SceneConsole.h"
 
-int main() {
+int main(int argc, char* argv[]) {
+    SceneConsole console;
+    console.initialize();
 
-    auto* console = new SceneConsole();
-    console->initialize();
-    console->run();
-
+    console.run();
 
     return 0;
 }

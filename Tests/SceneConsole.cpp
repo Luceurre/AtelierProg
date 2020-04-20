@@ -7,23 +7,47 @@
 int SceneConsole::initialize() {
     int codeResult = Scene::initialize();
 
-    this->consoleWindow = SDL_CreateWindow("Test", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1000, 1000, 0);
-    SDL_Window *win = SDL_CreateWindow("GAME", // creates a window
-                                       SDL_WINDOWPOS_CENTERED,
-                                       SDL_WINDOWPOS_CENTERED,
-                                       1000, 1000, 0);
+    SDL_Init(SDL_INIT_EVERYTHING);
 
-    this->consoleRenderer = SDL_CreateRenderer(win, -1, 0);
+    for(int i = 0; i > -1; --i) {
+        this->consoleWindow = createDefaultWindow();
+        WindowManager::getInstance().add_primary_window(this->consoleWindow);
 
-    SDL_RenderClear(this->consoleRenderer);
-    SDL_RenderPresent(this->consoleRenderer);
+        this->consoleRenderer = SDL_CreateRenderer(this->consoleWindow, -1, 0);
+
+        SDL_RenderClear(this->consoleRenderer);
+        SDL_RenderPresent(this->consoleRenderer);
+    }
 
     set_fps(UNCAPPED);
-    set_model_refresh_rate(DEFAULT_MODEL_REFRESH_RATE);
+    set_model_refresh_rate(10000);
+
+    nb_color = 0;
+    nb_color_vue = 0;
 
     return 0;
 }
 
 std::string SceneConsole::descriptor() {
     return "(Console)";
+}
+
+int SceneConsole::model() {
+    Scene::model();
+
+    this->r = rand() % 256;
+    g = rand() % 256;
+    b = rand() % 256;
+
+    nb_color++;
+}
+
+int SceneConsole::view() {
+    SDL_SetRenderDrawColor(this->consoleRenderer, r, g, b, SDL_ALPHA_OPAQUE);
+    SDL_RenderClear(this->consoleRenderer);
+    SDL_RenderPresent(this->consoleRenderer);
+
+    nb_color_vue++;
+
+    return 0;
 }
