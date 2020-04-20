@@ -3,20 +3,17 @@
 //
 
 #include "Game.h"
-#include "TextureManager.h"
-#include "GameObject.h"
 #include "Map.h"
-#include "ECS.h"
-#include "Components.h"
+#include "ECS/Components.h"
+#include "TextureManager.h"
+#include "Vector2D.h"
 
-GameObject* player;
-GameObject* enemy;
 Map* map;
+Manager manager;
 
 SDL_Renderer* Game::renderer = nullptr;
-
-Manager manager;
-auto& newPlayer(manager.addEntity());
+SDL_Event Game::event;
+auto& player(manager.addEntity());
 
 Game::Game() {
 
@@ -51,15 +48,16 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     } else {
         isRunning = false;
     }
-    player = new GameObject("assets/player2.png", 0, 0);
-    enemy = new GameObject("assets/player.png", 250, 250);
     map = new Map();
 
-    newPlayer.addComponents<PositionComponent>();
+    // ecs implementation
+
+    player.addComponents<TransformComponent>();
+    player.addComponents<SpriteComponent>("assets/player.png");
+    player.addComponents<KeyboardController>();
 }
 
 void Game::handleEvents() {
-    SDL_Event event;
     SDL_PollEvent(&event);
     switch (event.type) {
         case SDL_QUIT:
@@ -72,18 +70,14 @@ void Game::handleEvents() {
 }
 
 void Game::update() {
-    player->Update();
-    enemy->Update();
+    manager.refresh();
     manager.update();
-    std::cout << newPlayer.getComponent<PositionComponent>().x() <<
-    " , " << newPlayer.getComponent<PositionComponent>().y() << std::endl;
 }
 
 void Game::render() {
     SDL_RenderClear(renderer);
     map->drawMap();
-    player->Render();
-    enemy->Render();
+    manager.draw();
     SDL_RenderPresent(renderer);
 
 }
