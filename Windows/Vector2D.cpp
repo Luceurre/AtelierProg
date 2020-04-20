@@ -59,13 +59,18 @@ Vector2D& operator*(Vector2D& v1, const Vector2D& v2) {
     return v1.Multiply(v2);
 }
 
-Vector2D& operator*(Vector2D& v1, int& a) {
-    Vector2D v (a, a);
-    return v1.Multiply(v);
+Vector2D& Vector2D::operator*(const int &i) {
+    this->x *= i;
+    this->y *= i;
+
+    return *this;
 }
 
-Vector2D& operator*(int& a, Vector2D& v1) {
-    return v1*a;
+Vector2D& Vector2D::Zero() {
+    this->x = 0;
+    this->y = 0;
+
+    return *this;
 }
 
 Vector2D& Vector2D::operator+=(const Vector2D& vec) {
