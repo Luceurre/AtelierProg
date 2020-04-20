@@ -22,20 +22,15 @@ std::string Scene::descriptor() {
 }
 
 Scene::Scene(SceneView* sceneView, SceneLogic* sceneLogic) {
+    this->sceneState = CREATED;
+
     this->sceneLogic = sceneLogic;
     this->sceneView = sceneView;
-    this->sceneState = CREATED;
+
     this->model_refresh_rate = DEFAULT_MODEL_REFRESH_RATE;
     this->model_loop_time_ms = 1000 / DEFAULT_MODEL_REFRESH_RATE;
     this->fps = UNCAPPED;
     this->view_loop_time_ms = 0;
-
-    std::string log_msg = "Scene CREATED";
-    this->info(log_msg);
-    log_msg = "FPS set to UNCAPPED";
-    this->info(log_msg);
-    log_msg = "Model refresh rate set to " + std::to_string(DEFAULT_MODEL_REFRESH_RATE) +"Hz";
-    this->info(log_msg);
 }
 
 int Scene::initialize() {
@@ -45,6 +40,11 @@ int Scene::initialize() {
 }
 
 int Scene::run() {
+    if (this->get_state() == CREATED) {
+        std::string msg = "La scène n'a pas été initialisé avant!";
+        this->warn(msg);
+    }
+
     this->set_state(RUNNING);
 
     this->thread_model = std::thread(&Scene::run_model, this);
@@ -137,6 +137,32 @@ int Scene::model() {
     }
 
     return 0;
+}
+
+void Scene::set_fps(int fps) {
+    std::string log_msg;
+    if (fps == UNCAPPED) {
+        log_msg = "FPS set to UNCAPPED";
+    } else {
+        log_msg = "FPS set to " + std::to_string(fps);
+    }
+    this->info(log_msg);
+    this->fps = fps;
+    if (fps == UNCAPPED) {
+        this->view_loop_time_ms = 0;
+    } else {
+        this->view_loop_time_ms = 1000 / fps;
+    }
+}
+
+void Scene::set_model_refresh_rate(int model_refresh_rate) {
+    std::string log_msg;
+
+    log_msg = "Model refresh rate set to " + std::to_string(model_refresh_rate) +"Hz";
+    this->info(log_msg);
+
+    this->model_refresh_rate = model_refresh_rate;
+    this->model_loop_time_ms = 1000 / model_refresh_rate;
 }
 
 std::string scene_state_descriptor(SceneState sceneState) {

@@ -37,19 +37,22 @@ std::string scene_state_descriptor(SceneState sceneState);
 
 class Scene : protected Logger {
 public:
+    // Nothing should be done here, virtual methods can't be called.
     Scene();
     Scene(SceneView *sceneView, SceneLogic *sceneLogic);
     // Change l'état de la scène. Thread friendly.
     void set_state(SceneState newSceneState);
+    SceneState get_state();
     // Charge les images et les données relatives à la scène.
     virtual int initialize();
     // Lance 3 threads -> run_model, run_view et run_controller
     virtual int run();
 
+    void set_fps(int fps);
+    void set_model_refresh_rate(int model_refresh_rate);
 protected:
     std::string descriptor() override;
 
-    SceneState get_state();
 
     // Fonctions de lancement et de gestions des threads
     int run_model();

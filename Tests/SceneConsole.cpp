@@ -18,6 +18,8 @@ int SceneConsole::initialize() {
     SDL_RenderClear(this->consoleRenderer);
     SDL_RenderPresent(this->consoleRenderer);
 
+    set_fps(UNCAPPED);
+    set_model_refresh_rate(DEFAULT_MODEL_REFRESH_RATE);
 
     return 0;
 }
