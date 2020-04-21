@@ -13,7 +13,7 @@ Map::Map() {
 Map::~Map() {
 }
 
-void Map::loadMap(int arr[20][25]) {
+void Map::loadMap(std::string path, int sizeX, int sizeY) {
     char tile;
     std::fstream mapFile;
     mapFile.open(path);

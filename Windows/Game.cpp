@@ -57,6 +57,8 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
 
     // ecs implementation
 
+    Map::loadMap("assets/map_16x16.map", 16, 16);
+
     player.addComponents<TransformComponent>(0, 0, 32, 32, 1);
     player.addComponents<SpriteComponent>("assets/grass.png");
     player.addComponents<KeyboardController>();
