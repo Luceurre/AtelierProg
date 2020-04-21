@@ -1,5 +1,4 @@
-multi;on
-salut;je fonctionne
 color;2
+multi;on
 graphics;0
-sound;0
+sound;10

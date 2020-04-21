@@ -9,14 +9,19 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include "../API/Logger.h"
 
+//Parser Class to read/write from an unordered_map to .txt
+//Use ; in txt to separate key from value
 
-class parser {
+class parser : protected Logger{
 public:
-    void parser_write(std::string nom,std::unordered_map<std::string,std::string> dico);
-    std::unordered_map<std::string,std::string> parser_read(std::string nom);
+    void parser_write(const std::string& nom,const std::unordered_map<std::string,std::string>& dico); //Function to write from dico in nom.txt
+    std::unordered_map<std::string,std::string> parser_read(const std::string& nom);            //Function to read form nom.txt in dico
 
+    std::string descriptor() override;
 };
+
 
 
 #endif //ATELIERPROG_PARSER_H
