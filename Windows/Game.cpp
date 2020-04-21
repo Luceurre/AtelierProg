@@ -104,5 +104,6 @@ void Game::clean() {
 }
 
 void Game::addTile(int id, int x, int y) {
-    //auto& tile ;
+    auto& tile(manager.addEntity());
+    tile.addComponents<TileComponent>(x, y, 32, 32, id);
 }
