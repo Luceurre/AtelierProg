@@ -1,17 +1,17 @@
 //
-// Created by pglan on 20/04/2020.
+// Created by mathis on 20/04/2020.
 //
 
 #include <SDL.h>
-#include "options/parser.h"
+#include "options/options.h"
 
 int main(int argc, char* argv[]) {
 
-    parser options;
-    std::unordered_map<std::string,std::string> dico = options.parser_read("options/Options.txt");
+    options opt("options/Options.txt");
 
-    dico.emplace("salut","je fonctionne");
-    options.parser_write("options/Options.txt",dico);
+    opt.set_option("sound","0");
+    opt.read("options/Options.txt");
+    opt.write("options/Options.txt");
 
     return 0;
 }
