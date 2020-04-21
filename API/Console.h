@@ -8,11 +8,12 @@
 
 #include <vector>
 #include <string>
+#include <map>
 
 class Console {
     bool isActive;
-    void init();
-static std::vector<Console *> consoles;
+    void init(std::string consoleName);
+static std::map<std::string, Console *> consoles;
 };
 
 template<class T>

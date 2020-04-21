@@ -4,9 +4,9 @@
 
 #include "Console.h"
 
-std::vector<Console *> Console::consoles;
+std::map<std::string, Console *> Console::consoles;
 
-void Console::init() {
+void Console::init(std::string consoleName) {
     this->isActive = true;
-    Console::consoles.push_back(this);
+    Console::consoles.emplace(consoleName, this);
 }

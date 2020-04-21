@@ -11,6 +11,7 @@ INCLUDE(FindPkgConfig REQUIRED)
 
 pkg_check_modules(SDL2 REQUIRED sdl2)
 pkg_check_modules(SDL2_IMAGE REQUIRED SDL2_image)
+pkg_check_modules(SDL2_TTF REQUIRED SDL2_ttf)
 
 include_directories(${SDL2_INCLUDE_DIRS}
         ${SDL2_IMAGE_INCLUDE_DIRS})
@@ -23,8 +24,8 @@ add_executable(JulienSandbox main_julien.cpp Windows/Game.cpp Windows/Game.h Win
 add_executable(MathisSandbox main_mathis.cpp options/parser.cpp options/parser.h)
 
 target_link_libraries (MathisSandbox ${SDL2_LIBRARIES}
-        ${SDL2_IMAGE_LIBRARIES})
+        ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES})
 target_link_libraries (PierreSandbox ${SDL2_LIBRARIES}
-        ${SDL2_IMAGE_LIBRARIES})
+        ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES})
 target_link_libraries (JulienSandbox ${SDL2_LIBRARIES}
-        ${SDL2_IMAGE_LIBRARIES})
+        ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES})
