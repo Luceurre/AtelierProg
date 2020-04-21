@@ -20,10 +20,6 @@ std::vector<ColliderComponent*> Game::colliders;
 auto& player(manager.addEntity());
 auto& wall(manager.addEntity());
 
-auto& tile0(manager.addEntity());
-auto& tile1(manager.addEntity());
-auto& tile2(manager.addEntity());
-
 Game::Game() {
 
 }
@@ -61,12 +57,6 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
 
     // ecs implementation
 
-    tile0.addComponents<TileComponent>(200, 200, 32, 32, 0);
-    tile1.addComponents<TileComponent>(250, 250, 32, 32, 1);
-    tile1.addComponents<ColliderComponent>("dirt");
-    tile2.addComponents<TileComponent>(150, 150, 32, 32, 2);
-    tile2.addComponents<ColliderComponent>("grass");
-
     player.addComponents<TransformComponent>(0, 0, 32, 32, 1);
     player.addComponents<SpriteComponent>("assets/grass.png");
     player.addComponents<KeyboardController>();
@@ -93,15 +83,14 @@ void Game::update() {
     manager.refresh();
     manager.update();
 
-    if (Collision::AABB(player.getComponent<ColliderComponent>().collider, wall.getComponent<ColliderComponent>().collider)) {
-        player.getComponent<TransformComponent>().velocity * -1;
-        std::cout << "Wall hit !" << std::endl;
+    for (auto cc: colliders) {
+        Collision::AABB(player.getComponent<ColliderComponent>(), *cc);
     }
 }
 
 void Game::render() {
     SDL_RenderClear(renderer);
-    map->drawMap();
+    //map->drawMap();
     manager.draw();
     SDL_RenderPresent(renderer);
 
@@ -112,4 +101,8 @@ void Game::clean() {
     SDL_DestroyRenderer(renderer);
     SDL_Quit();
     std::cout << "Game Cleaned" << std::endl;
+}
+
+void Game::addTile(int id, int x, int y) {
+    //auto& tile ;
 }
