@@ -1,0 +1,5 @@
+multi;on
+salut;je fonctionne
+color;2
+graphics;0
+sound;0
