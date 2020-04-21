@@ -23,7 +23,7 @@
 
 // Une scène le plus général possible.
 // sert de base à l'ensemble de l'API
-
+// ATTENTION : l'affichage DOIT se faire dans le thread principale ou SEGFAULT!!
 enum SceneState {
     CREATED,
     INITIALIZED,

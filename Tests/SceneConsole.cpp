@@ -13,7 +13,7 @@ int SceneConsole::initialize() {
         this->consoleWindow = createDefaultWindow();
         WindowManager::getInstance().add_primary_window(this->consoleWindow);
 
-        this->consoleRenderer = SDL_CreateRenderer(this->consoleWindow, -1, 0);
+        this->consoleRenderer = SDL_CreateRenderer(this->consoleWindow, -1, SDL_RENDERER_PRESENTVSYNC);
 
         SDL_RenderClear(this->consoleRenderer);
         SDL_RenderPresent(this->consoleRenderer);
@@ -24,6 +24,14 @@ int SceneConsole::initialize() {
 
     nb_color = 0;
     nb_color_vue = 0;
+
+    Command cmd;
+    cmd.name = std::string("help");
+    cmd.callback = SceneConsole::help;
+
+    this->commands.push_back(cmd);
+
+    this->commands[0].callback(this);
 
     return 0;
 }
@@ -40,6 +48,8 @@ int SceneConsole::model() {
     b = rand() % 256;
 
     nb_color++;
+
+    return 0;
 }
 
 int SceneConsole::view() {
@@ -50,4 +60,8 @@ int SceneConsole::view() {
     nb_color_vue++;
 
     return 0;
+}
+
+void SceneConsole::help(SceneConsole* sc) {
+    sc->set_state(DESTROYED);
 }

@@ -9,8 +9,9 @@
 
 #include "../API/Scene.h"
 #include "../API/WindowManager.h"
+#include "../API/Console.h"
 
-class SceneConsole : public Scene {
+class SceneConsole : public Scene, public ConsoleTemplated<SceneConsole> {
     SDL_Window *consoleWindow;
     SDL_Renderer *consoleRenderer;
 
@@ -21,6 +22,8 @@ public:
     int initialize() override;
     int view() override ;
     int model() override ;
+
+    static void help(SceneConsole*);
 };
 
 

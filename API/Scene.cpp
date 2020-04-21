@@ -40,20 +40,30 @@ int Scene::initialize() {
 }
 
 int Scene::run() {
+    std::string msg;
     if (this->get_state() == CREATED) {
-        std::string msg = "La scène n'a pas été initialisé avant!";
+        msg = "La scène n'a pas été initialisé avant!";
         this->warn(msg);
     }
 
     this->set_state(RUNNING);
 
     this->thread_model = std::thread(&Scene::run_model, this);
-    this->thread_view = std::thread(&Scene::run_view, this);
+    // this->thread_view = std::thread(&Scene::run_view, this);
     this->thread_controller = std::thread(&Scene::run_controller, this);
 
+    // On lance la vue dans le thread principal:
+    this->run_view();
+
+    msg = "Waiting for threads to end...";
+    this->info(msg);
+
     this->thread_model.join();
-    this->thread_view.join();
+    // this->thread_view.join();
     this->thread_controller.join();
+
+    msg = "Threads ended.";
+    this->info(msg);
 
     this->quit();
 
@@ -109,7 +119,8 @@ int Scene::run_model() {
         int elapsed_time = currentTime - lastTime; // Temps passé à faire des trucs en ms
         if(elapsed_time <= this->model_loop_time_ms) {
             msg = "Waiting " + std::to_string(this->model_loop_time_ms - elapsed_time) + "ms";
-            this->info(msg);
+            // Juste pour vérifier la précision de l'horloge.
+            // this->info(msg);
             SDL_Delay(this->model_loop_time_ms - elapsed_time);
             currentTime = SDL_GetTicks();
         } else {
