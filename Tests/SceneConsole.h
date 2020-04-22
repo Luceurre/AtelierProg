@@ -29,6 +29,7 @@ public:
     int initialize() override;
     int view() override ;
     int controller() override ;
+    int model()override ;
 
     static void help(SceneConsole*);
 
@@ -44,6 +45,9 @@ public:
 
 private:
     std::mutex buffer_mtx;
+    std::mutex whole_text_mtx;
+    std::string buffer;
+    std::stringstream stream;
 };
 
 

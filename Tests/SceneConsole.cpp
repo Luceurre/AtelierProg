@@ -3,6 +3,7 @@
 //
 
 #include "SceneConsole.h"
+#include "../API/tools.h"
 
 int SceneConsole::initialize() {
     int codeResult = Scene::initialize();
@@ -39,6 +40,25 @@ std::string SceneConsole::descriptor() {
     return "(Console)";
 }
 
+
+int SceneConsole::model() {
+    Scene::model();
+
+    if (!buffer.empty()) {
+        // On parse le buffer et on appelle la bonne commande
+        std::vector<std::string> res = split(buffer, ' ');
+        std::stringstream os;
+
+        Console::process_command(res, os);
+
+        std::lock_guard<std::mutex> lock(whole_text_mtx);
+        whole_text += os.str();
+
+        // On vite le buffer
+        buffer = "";
+    }
+}
+
 int SceneConsole::controller() {
     Scene::controller();
 
@@ -62,9 +82,6 @@ int SceneConsole::controller() {
                     default:
                         this->add_text(key);
                         break;
-                }
-                if (key == SDLK_RETURN) {
-                    this->input_text();
                 }
         }
     }
@@ -90,8 +107,7 @@ void SceneConsole::input_text() {
     this->whole_text += this->inputed_text + '\n';
     // Run command here and add output to whole_text
     std::lock_guard<std::mutex> lock(buffer_mtx);
-    this->buffer = this->inputed_text;
-
+    this->buffer.assign(this->inputed_text);
     this->inputed_text = "";
 }
 
