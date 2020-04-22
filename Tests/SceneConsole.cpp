@@ -14,6 +14,10 @@ int SceneConsole::initialize() {
     }
 
     this->font = TTF_OpenFont("fonts/FreeMono.ttf", 25);
+    if(!font) {
+        std::string msg = "Couldn't load FreeMono.ttf";
+        error(msg);
+    }
 
     for(int i = 0; i > -1; --i) {
         this->consoleWindow = createDefaultWindow();
@@ -28,15 +32,6 @@ int SceneConsole::initialize() {
     set_fps(UNCAPPED);
     set_model_refresh_rate(200);
 
-
-    Command cmd;
-    cmd.name = std::string("help");
-    cmd.callback = SceneConsole::help;
-
-    this->commands.push_back(cmd);
-
-    this->commands[0].callback(this);
-
     return 0;
 }
 
@@ -44,8 +39,8 @@ std::string SceneConsole::descriptor() {
     return "(Console)";
 }
 
-int SceneConsole::model() {
-    // Scene::model();
+int SceneConsole::controller() {
+    Scene::controller();
 
     SDL_Event e;
     while(SDL_PollEvent(&e)) {
@@ -94,6 +89,9 @@ void SceneConsole::help(SceneConsole* sc) {
 void SceneConsole::input_text() {
     this->whole_text += this->inputed_text + '\n';
     // Run command here and add output to whole_text
+    std::lock_guard<std::mutex> lock(buffer_mtx);
+    this->buffer = this->inputed_text;
+
     this->inputed_text = "";
 }
 

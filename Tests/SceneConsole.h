@@ -28,7 +28,7 @@ public:
     std::string descriptor() override;
     int initialize() override;
     int view() override ;
-    int model() override ;
+    int controller() override ;
 
     static void help(SceneConsole*);
 
@@ -41,6 +41,9 @@ public:
 
     // Affiche à l'écran une ligne
     void render_line(int x, int y, const std::string& line);
+
+private:
+    std::mutex buffer_mtx;
 };
 
 

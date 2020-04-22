@@ -84,6 +84,7 @@ int Scene::run_view() {
 
         // Call the things to do...
         this->view();
+        this->controller();
 
         currentTime = SDL_GetTicks();
         int elapsed_time = currentTime - lastTime; // Temps passé à faire des trucs en ms
@@ -145,10 +146,6 @@ int Scene::view() {
 }
 
 int Scene::model() {
-    if(SDL_GetTicks() > 10000) {
-        this->set_state(STOPPED);
-    }
-
     return 0;
 }
 
