@@ -55,6 +55,7 @@ private:
 
     ComponentArray componentArray;
     ComponentBitSet componentBitSet;
+    GroupBitSet groupBitSet;
 public:
     Entity(Manager& mManager) : manager(mManager) {}
 
@@ -68,12 +69,12 @@ public:
     void destroy() { active = false; }
 
     bool hasGroup(Group mGroup) {
-        return GroupBitset[mGroup];
+        return groupBitSet[mGroup];
     }
 
     void addGroup(Group mGroup);
     void delGroup(Group mGroup) {
-        GroupBitset[mGroup] = false;
+        groupBitSet[mGroup] = false;
     }
 
     template <typename T> bool hasComponent() const {
@@ -131,9 +132,17 @@ public:
         std::end(entities));
     }
 
+    void AddToGroup(Entity* mEntity, Group mGroup) {
+        groupedEntities[mGroup].emplace_back(mEntity);
+    }
+
+    std::vector<Entity*>& getGroup(Group mGroup) {
+        return groupedEntities[mGroup];
+    }
+
     Entity& addEntity()
     {
-        Entity* e = new Entity();
+        Entity* e = new Entity(*this);
         std::unique_ptr<Entity> uPtr{ e };
         entities.emplace_back(std::move(uPtr));
         return *e;
