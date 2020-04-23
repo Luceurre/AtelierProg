@@ -36,13 +36,13 @@ protected:
     void parse_log_message(LogLevel ll, std::string& msg);
 
     // Ajoute au log le message en fonction de la sévérité.
-    void log(LogLevel ll, std::string& msg);
+    void log(LogLevel ll, const std::string& msg);
 
     // Des p'tites fonctions pour éviter d'avoir à spécifier le niveau de log du message.
-    void info(std::string& msg);
-    void warn(std::string& msg);
-    void error(std::string& msg);
-    void fatal(std::string& msg);
+    void info(const std::string& msg);
+    void warn(const std::string& msg);
+    void error(const std::string& msg);
+    void fatal(const std::string& msg);
     // Generate s string that can describe the object (by default memory address).
     std::string object_descriptor();
 };

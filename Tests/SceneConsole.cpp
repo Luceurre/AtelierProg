@@ -8,12 +8,6 @@
 int SceneConsole::initialize() {
     int codeResult = Scene::initialize();
 
-    SDL_Init(SDL_INIT_EVERYTHING);
-    if(TTF_Init() == -1) {
-        std::string msg = "Couldn't load SDL2_ttf";
-        this->error(msg);
-    }
-
     this->font = TTF_OpenFont("fonts/FreeMono.ttf", 25);
     if(!font) {
         std::string msg = "Couldn't load FreeMono.ttf";
@@ -32,6 +26,10 @@ int SceneConsole::initialize() {
 
     set_fps(UNCAPPED);
     set_model_refresh_rate(200);
+
+    // On enregistre la scène pour faire tourner des commandes dessus...
+    // Full majuscule sinon ça fonctionne po...
+    init_console("SCENECONSOLE");
 
     return 0;
 }
@@ -57,6 +55,8 @@ int SceneConsole::model() {
         // On vite le buffer
         buffer = "";
     }
+
+    return 0;
 }
 
 int SceneConsole::controller() {
@@ -99,8 +99,9 @@ int SceneConsole::view() {
     return 0;
 }
 
-void SceneConsole::help(SceneConsole* sc) {
-    sc->set_state(DESTROYED);
+void SceneConsole::help(Console* sc) {
+    auto *realSC = (SceneConsole *)sc;
+    realSC->set_state(DESTROYED);
 }
 
 void SceneConsole::input_text() {
@@ -173,4 +174,34 @@ void SceneConsole::render_line(int x, int y, const std::string& line) {
                                                  line.c_str(), color);
     SDL_Texture * texture = SDL_CreateTextureFromSurface(consoleRenderer, surface);
     SDL_RenderCopy(consoleRenderer, texture, NULL, &dest);
+}
+
+void SceneConsole::set_bg_color(Console *c, const std::vector<std::string>& args, std::stringstream& output_stream) {
+    auto* sc = (SceneConsole*) c;
+    if(args.size() == 4) {
+        int r = std::stoi(args[0]);
+        int g = std::stoi(args[1]);
+        int b = std::stoi(args[2]);
+        int a = std::stoi(args[3]);
+        SDL_SetRenderDrawColor(sc->consoleRenderer, r, g, b, a);
+    } else {
+        output_stream << "Usage: BGCOLOR R G B A" << std::endl;
+    }
+
+}
+
+void SceneConsole::init_console(const std::string& consoleName) {
+    Console::init_console(consoleName);
+
+    commands.emplace("BGCOLOR", SceneConsole::set_bg_color);
+    commands.emplace("LIST", SceneConsole::list_consoles);
+}
+
+void SceneConsole::list_consoles(Console *c, const std::vector<std::string>& args, std::stringstream &output) {
+    std::vector<std::string> consolesName;
+
+    Console::get_consoles_name(consolesName);
+    for(const auto& name : consolesName) {
+        output << name << std::endl;
+    }
 }

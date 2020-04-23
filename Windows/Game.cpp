@@ -31,9 +31,6 @@ enum groupLabels : std::size_t {
     groupColliders
 };
 
-Game::Game() {
-
-}
 
 Game::~Game() {
 

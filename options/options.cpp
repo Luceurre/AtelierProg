@@ -29,3 +29,7 @@ void options::write(const std::string &nom) {
     parser par;
     par.parser_write(nom,opt);
 }
+
+void options::add_option(const std::string& key,const std::string& value) {
+    opt.emplace(key,value);
+}

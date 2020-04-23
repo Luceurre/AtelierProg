@@ -17,7 +17,7 @@
 #define INTERSPACE 0
 #define TOPLEFT_MARGIN 20
 
-class SceneConsole : public Scene, public ConsoleTemplated<SceneConsole> {
+class SceneConsole : public Scene, public Console {
     SDL_Window *consoleWindow;
     SDL_Renderer *consoleRenderer;
     TTF_Font *font;
@@ -31,7 +31,7 @@ public:
     int controller() override ;
     int model()override ;
 
-    static void help(SceneConsole*);
+    static void help(Console*);
 
     void input_text();
 
@@ -43,11 +43,18 @@ public:
     // Affiche à l'écran une ligne
     void render_line(int x, int y, const std::string& line);
 
+protected:
+    void init_console(const std::string& consoleName) override ;
+
 private:
     std::mutex buffer_mtx;
     std::mutex whole_text_mtx;
     std::string buffer;
     std::stringstream stream;
+
+    // Console related commands
+    static void set_bg_color(Console*, const std::vector<std::string>&, std::stringstream&);
+    static void list_consoles(Console* c, const std::vector<std::string>& args, std::stringstream& output);
 };
 
 

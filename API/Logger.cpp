@@ -34,27 +34,28 @@ void Logger::parse_log_message(Logger::LogLevel ll, std::string& msg) {
     msg = error_descriptor(ll) + " " + descriptor() + " " + object_descriptor() + " " + Logger::timestamp() + " " + msg;
 }
 
-void Logger::log(Logger::LogLevel ll, std::string& msg) {
+void Logger::log(Logger::LogLevel ll, const std::string& msg) {
     if(ll >= Logger::logLevel) {
         // const std::lock_guard<std::mutex> lock(Logger::mtx);
-        this->parse_log_message(ll, msg);
-        std::cout << msg << std::endl;
+        std::string copy = msg;
+        this->parse_log_message(ll, copy);
+        std::cout << copy << std::endl;
     }
 }
 
-void Logger::info(std::string& msg) {
+void Logger::info(const std::string& msg) {
     this->log(Logger::LogLevel::INFO, msg);
 }
 
-void Logger::warn(std::string& msg) {
+void Logger::warn(const std::string& msg) {
     this->log(Logger::LogLevel::WARNING, msg);
 }
 
-void Logger::error(std::string& msg) {
+void Logger::error(const std::string& msg) {
     this->log(Logger::LogLevel::ERROR, msg);
 }
 
-void Logger::fatal(std::string& msg) {
+void Logger::fatal(const std::string& msg) {
     this->log(Logger::LogLevel::FATAL, msg);
 }
 
