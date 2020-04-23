@@ -19,10 +19,16 @@ include_directories(${SDL2_INCLUDE_DIRS}
 link_directories (${SDL2_LIBRARY_DIRS}
         ${SDL2_IMAGE_LIBRARY_DIRS})
 
-add_executable(PierreSandbox main_pierre.cpp API/Logger.cpp API/Logger.h API/Scene.cpp API/Scene.h API/SceneView.cpp API/SceneView.h API/SceneLogic.cpp API/SceneLogic.h Tests/SceneConsole.cpp Tests/SceneConsole.h API/Window.cpp API/Window.h API/WindowManager.cpp API/WindowManager.h Sandbox/A.cpp Sandbox/A.h Sandbox/AManager.cpp Sandbox/AManager.h API/SceneManager.cpp API/SceneManager.h API/Console.cpp API/Console.h API/tools.cpp API/tools.h API/Game.cpp API/Game.h)
-add_executable(JulienSandbox main_julien.cpp Windows/Game.cpp Windows/Game.h Windows/TextureManager.h Windows/TextureManager.cpp Windows/GameObject.h Windows/GameObject.cpp Windows/Map.h Windows/Map.cpp Windows/ECS/ECS.h Windows/ECS/Components.h Windows/ECS/SpriteComponent.h Windows/ECS/TransformComponent.h Windows/Vector2D.h Windows/Vector2D.cpp Windows/ECS/KeyboardController.h Windows/Collision.h Windows/Collision.cpp Windows/ECS/ECS.cpp Windows/ECS/Animation.h)
+# On récupère tous les fichiers .cpp et .h
+SET(PIERRE_SRC_DIR API)
+SET(PIERRE_SRC ${PIERRE_SRC_DIR}/Console.h ${PIERRE_SRC_DIR}/Console.cpp ${PIERRE_SRC_DIR}/Game.cpp ${PIERRE_SRC_DIR}/Game.h ${PIERRE_SRC_DIR}/Logger.cpp ${PIERRE_SRC_DIR}/Logger.h ${PIERRE_SRC_DIR}/Scene.cpp ${PIERRE_SRC_DIR}/Scene.h ${PIERRE_SRC_DIR}/SceneLogic.h ${PIERRE_SRC_DIR}/SceneLogic.cpp ${PIERRE_SRC_DIR}/SceneManager.cpp ${PIERRE_SRC_DIR}/SceneManager.h ${PIERRE_SRC_DIR}/SceneView.cpp ${PIERRE_SRC_DIR}/SceneView.h ${PIERRE_SRC_DIR}/tools.cpp ${PIERRE_SRC_DIR}/tools.h ${PIERRE_SRC_DIR}/Window.cpp ${PIERRE_SRC_DIR}/Window.h ${PIERRE_SRC_DIR}/WindowManager.cpp ${PIERRE_SRC_DIR}/WindowManager.h)
+
+add_executable(PierreSandbox main_pierre.cpp ${PIERRE_SRC})
+# add_executable(JulienSandbox main_julien.cpp Windows/Game.cpp Windows/Game.h Windows/TextureManager.h Windows/TextureManager.cpp Windows/GameObject.h Windows/GameObject.cpp Windows/Map.h Windows/Map.cpp Windows/ECS/ECS.h Windows/ECS/Components.h Windows/ECS/SpriteComponent.h Windows/ECS/TransformComponent.h Windows/Vector2D.h Windows/Vector2D.cpp Windows/ECS/KeyboardController.h Windows/Collision.h Windows/Collision.cpp Windows/ECS/ECS.cpp Windows/ECS/Animation.h Windows/ECS/MouseComponent.h)
+add_executable(JulienSandbox main_julien.cpp Windows/Game.cpp Windows/Game.h)
+
 add_executable(MathisSandbox main_mathis.cpp options/parser.cpp options/parser.h options/options.cpp options/options.h API/Logger.cpp API/Logger.h)
-add_executable(PierreMathisSandbox PierreMathis/main_pierremathis.cpp)
+add_executable(PierreMathisSandbox PierreMathis/main_pierremathis.cpp Windows/ECS/MouseComponent.h)
 
 target_link_libraries (MathisSandbox ${SDL2_LIBRARIES}
         ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES})

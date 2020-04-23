@@ -27,6 +27,8 @@ public:
     SceneManager(SceneManager const&) = delete;
     void operator=(SceneManager const&) = delete;
 
+    void add_scene(Scene* scene);
+
     SceneManager();
 };
 

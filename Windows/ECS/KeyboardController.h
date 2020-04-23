@@ -13,14 +13,25 @@ class KeyboardController : public Component {
 public:
     TransformComponent *transform;
     SpriteComponent *sprite;
+    SDL_Event *event;
+
+    explicit KeyboardController(SDL_Event* event) {
+        this->event = event;
+        transform = nullptr;
+        sprite = nullptr;
+    }
 
     void init() override {
+        if(!event) {
+            std::cout << "Erreur!" << std::endl;
+            exit(-1);
+        }
         transform = &entity->getComponent<TransformComponent>();
         sprite = &entity->getComponent<SpriteComponent>();
     }
 
     void update() override {
-        if (Game::event.type == SDL_KEYDOWN) {
+        if (event->type == SDL_KEYDOWN) {
             switch (Game::event.key.keysym.sym) {
                 case SDLK_z:
                     transform->velocity.y = -1;

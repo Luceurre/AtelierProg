@@ -4,10 +4,10 @@
 
 #include "SDL.h"
 #include "Windows/Game.h"
-#include <fstream>
-#include "MapEditor/MapEditor.h"
+// #include <fstream>
+// #include "MapEditor/MapEditor.h"
 
-Game *game = nullptr;
+// Game *game = nullptr;
 
 int main(int argc, char *argv[])
 {
@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
 
     game->clean();*/
 
-    test();
+    // test();
 
     return 0;
 }

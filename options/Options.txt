@@ -1,4 +1,4 @@
+sound;10
+graphics;0
 color;2
 multi;on
-graphics;0
-sound;10
