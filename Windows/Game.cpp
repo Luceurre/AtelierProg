@@ -132,7 +132,7 @@ void Game::clean() {
     SDL_DestroyWindow(window);
     SDL_DestroyRenderer(renderer);
     SDL_Quit();
-    std::cout << "Game Cleaned" << std::endl;
+    std::cout << "Windows Cleaned" << std::endl;
 }
 
 void Game::addTile(int srcX, int srcY, int xpos, int ypos) {
