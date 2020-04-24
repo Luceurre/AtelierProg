@@ -50,7 +50,7 @@ int Scene::run() {
 
     this->thread_model = std::thread(&Scene::run_model, this);
     // this->thread_view = std::thread(&Scene::run_view, this);
-    this->thread_controller = std::thread(&Scene::run_controller, this);
+    // this->thread_controller = std::thread(&Scene::run_controller, this);
 
     // On lance la vue dans le thread principal:
     this->run_view();
@@ -83,6 +83,7 @@ int Scene::run_view() {
         lastTime = currentTime;
 
         // Call the things to do...
+        this->controller();
         this->view();
         this->controller();
 

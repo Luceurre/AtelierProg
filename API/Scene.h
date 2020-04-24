@@ -24,6 +24,8 @@
 // Une scène le plus général possible.
 // sert de base à l'ensemble de l'API
 // ATTENTION : l'affichage DOIT se faire dans le thread principale ou SEGFAULT!!
+// ATTENTION 2 : La gestion des évènements doit également être faites dans le thread principale!
+// heureusement les évènements arrivent de façon désynchronisés donc should be OK.
 enum SceneState {
     CREATED,
     INITIALIZED,

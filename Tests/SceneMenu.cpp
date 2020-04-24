@@ -33,6 +33,9 @@ int SceneMenu::initialize() {
         error(msg);
     }
 
+    set_model_refresh_rate(200);
+    set_fps(UNCAPPED);
+
     return 0;
 }
 
