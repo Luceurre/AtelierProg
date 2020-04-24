@@ -8,7 +8,7 @@ std::map<std::string, SDL_Surface *> TextureManager::textures;
 
 SDL_Renderer* TextureManager::renderer = nullptr;
 
-SDL_Texture* TextureManager::LoadTexture(std::string fileName, SDL_Rect &texture_dimension) {
+SDL_Texture* TextureManager::LoadTexture(const std::string& fileName, SDL_Rect &texture_dimension) {
     auto texture = TextureManager::textures.find(fileName);
     SDL_Surface* tempSurface;
 
@@ -30,12 +30,14 @@ SDL_Texture* TextureManager::LoadTexture(std::string fileName, SDL_Rect &texture
     texture_dimension.w = tempSurface->w;
     texture_dimension.h = tempSurface->h;
     SDL_Texture* tex = SDL_CreateTextureFromSurface(TextureManager::renderer, tempSurface);
-    SDL_FreeSurface(tempSurface);
+
+    // TODO : free all textures at the end of the program
+    // SDL_FreeSurface(tempSurface);
 
     return tex;
 
 }
 
 void TextureManager::Draw(SDL_Texture *tex, SDL_Rect src, SDL_Rect dest, SDL_RendererFlip flip) {
-    SDL_RenderCopyEx(TextureManager::renderer, tex, &src, &dest, NULL, NULL, flip);
+    SDL_RenderCopyEx(TextureManager::renderer, tex, &src, &dest, 0, NULL, flip);
 }
