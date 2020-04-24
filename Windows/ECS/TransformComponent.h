@@ -15,6 +15,10 @@ public:
     Vector2D position;
     Vector2D velocity;
 
+    // 32 x 32 parce que nique ta mère ????????
+    // Gros tu casses les couilles
+    // Autant la position je m'en bat royal les couilles de ce qu'elle vaut par défault
+    // autant le truc qui fait que ça s'affiche pas t'abuse un peu....
     int height = 32;
     int width = 32;
     int scale = 1;

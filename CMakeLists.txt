@@ -28,10 +28,10 @@ SET(PIERRE_TEST_SRC ${PIERRE_TEST_DIR}/SceneConsole.cpp ${PIERRE_TEST_DIR}/Scene
 # De même pour Julien
 SET(JULIEN_SRC_DIR Windows)
 SET(JULIEN_ECS_DIR ECS)
-SET(JULIEN_SRC ${JULIEN_SRC_DIR}/Collision.cpp ${JULIEN_SRC_DIR}/Collision.h ${JULIEN_SRC_DIR}/Game.cpp ${JULIEN_SRC_DIR}/Game.h ${JULIEN_SRC_DIR}/GameObject.cpp ${JULIEN_SRC_DIR}/GameObject.h ${JULIEN_SRC_DIR}/Map.cpp ${JULIEN_SRC_DIR}/Map.h ${JULIEN_SRC_DIR}/TextureManager.cpp ${JULIEN_SRC_DIR}/TextureManager.h ${JULIEN_SRC_DIR}/Vector2D.cpp ${JULIEN_SRC_DIR}/Vector2D.h)
+SET(JULIEN_SRC ${JULIEN_SRC_DIR}/Collision.cpp ${JULIEN_SRC_DIR}/Collision.h ${JULIEN_SRC_DIR}/Game.cpp ${JULIEN_SRC_DIR}/Game.h ${JULIEN_SRC_DIR}/Map.cpp ${JULIEN_SRC_DIR}/Map.h ${JULIEN_SRC_DIR}/TextureManager.h ${JULIEN_SRC_DIR}/TextureManager.cpp ${JULIEN_SRC_DIR}/Vector2D.cpp ${JULIEN_SRC_DIR}/Vector2D.h)
 SET(JULIEN_ECS_SRC ${JULIEN_SRC_DIR}/${JULIEN_ECS_DIR}/Animation.h ${JULIEN_SRC_DIR}/${JULIEN_ECS_DIR}/ColliderComponent.h ${JULIEN_SRC_DIR}/${JULIEN_ECS_DIR}/Components.h ${JULIEN_SRC_DIR}/${JULIEN_ECS_DIR}/ECS.cpp ${JULIEN_SRC_DIR}/${JULIEN_ECS_DIR}/ECS.h ${JULIEN_SRC_DIR}/${JULIEN_ECS_DIR}/MouseComponent.h ${JULIEN_SRC_DIR}/${JULIEN_ECS_DIR}/KeyboardController.h ${JULIEN_SRC_DIR}/${JULIEN_ECS_DIR}/SpriteComponent.h ${JULIEN_SRC_DIR}/${JULIEN_ECS_DIR}/TileComponent.h ${JULIEN_SRC_DIR}/${JULIEN_ECS_DIR}/TransformComponent.h Windows/ECS/ClickableComponent.h)
 
-add_executable(PierreSandbox main_pierre.cpp ${PIERRE_SRC} ${PIERRE_TEST_SRC})
+add_executable(PierreSandbox main_pierre.cpp ${PIERRE_SRC} ${PIERRE_TEST_SRC}  ${JULIEN_ECS_SRC} ${JULIEN_SRC})
 # add_executable(JulienSandbox main_julien.cpp Windows/Game.cpp Windows/Game.h Windows/TextureManager.h Windows/TextureManager.cpp Windows/GameObject.h Windows/GameObject.cpp Windows/Map.h Windows/Map.cpp Windows/ECS/ECS.h Windows/ECS/Components.h Windows/ECS/SpriteComponent.h Windows/ECS/TransformComponent.h Windows/Vector2D.h Windows/Vector2D.cpp Windows/ECS/KeyboardController.h Windows/Collision.h Windows/Collision.cpp Windows/ECS/ECS.cpp Windows/ECS/Animation.h Windows/ECS/MouseComponent.h)
 add_executable(JulienSandbox main_julien.cpp ${JULIEN_SRC} ${JULIEN_ECS_SRC})
 

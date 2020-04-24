@@ -5,11 +5,16 @@
 #ifndef ATELIERPROG_TEXTUREMANAGER_H
 #define ATELIERPROG_TEXTUREMANAGER_H
 
-#include "Game.h"
+#include <SDL.h>
+#include <SDL_image.h>
 
+// Gros tu peux pas faire ça!
+// Comment je fais pour utiliser ton code dans mon programme maintenant ????
+// bah je peux pas c'est ça la réponse...
 class TextureManager {
 public:
-    static SDL_Texture* LoadTexture(const char* fileName);
+    static SDL_Renderer* renderer;
+    static SDL_Texture* LoadTexture(const char* fileName, SDL_Rect &texture_dimension);
     static void Draw(SDL_Texture* tex, SDL_Rect src, SDL_Rect dest, SDL_RendererFlip flip);
 };
 

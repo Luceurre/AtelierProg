@@ -22,7 +22,7 @@ public:
     }
 
     TileComponent(int srcX, int srcY, int xpos, int ypos, const char* path) {
-        texture = TextureManager::LoadTexture(path);
+        texture = TextureManager::LoadTexture(path, srcRect);
 
         position.x = xpos;
         position.y = ypos;

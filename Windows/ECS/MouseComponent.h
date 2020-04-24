@@ -12,7 +12,7 @@ public:
         this->mouse_y = mouseY;
     }
 
-private:
+public:
     int* mouse_x;
     int* mouse_y;
 };

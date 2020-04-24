@@ -6,12 +6,24 @@
 #include "Sandbox/AManager.h"
 
 #include "API/tools.h"
+#include "Tests/SceneMenu.h"
 
 int main(int argc, char* argv[]) {
-    SceneConsole console;
-    console.initialize();
+    // On check si les libs sont bien installés
+    if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
+        // fatal("Couldn't init SDL");
+        exit(-1);
+    }
+    if(TTF_Init() == -1) {
+        // fatal("Couldn't init SDL_ttf");
+        exit(-1);
+    }
 
-    console.run();
+    auto* scene = new SceneMenu();
+    scene->initialize();
+
+    scene->run();
+
 
 
     return 0;

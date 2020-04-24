@@ -12,7 +12,7 @@
 #include <map>
 
 class SpriteComponent : public Component {
-private:
+public:
     TransformComponent *transform;
     SDL_Texture *texture;
     SDL_Rect srcRect, destRect;
@@ -50,15 +50,20 @@ public:
 
 
     void setTex(const char* path) {
-        texture = TextureManager::LoadTexture(path);
+        texture = TextureManager::LoadTexture(path, srcRect);
     }
 
     void init() override {
+        // Il y a une dépendance donc tu l'indiques stp...
+        if(!entity->hasComponent<TransformComponent>()) {
+            entity->addComponents<TransformComponent>();
+            std::cout << "Warning! Using default TransformComponent for SpriteComponent." << std::endl;
+            transform = &entity->getComponent<TransformComponent>();
 
-        transform = &entity->getComponent<TransformComponent>();
+            transform->height = srcRect.h;
+            transform->width = srcRect.w;
+        }
 
-        srcRect.h = transform->height;
-        srcRect.w = transform->width;
         srcRect.x = 0;
         srcRect.y = 0;
     }
@@ -71,14 +76,14 @@ public:
 
         srcRect.y = animIndex * transform->height;
 
-        destRect.x = static_cast<int>(transform->position.x) - Game::camera.x;
-        destRect.y = static_cast<int>(transform->position.y) - Game::camera.y;
+        destRect.x = static_cast<int>(transform->position.x); // - Game::camera.x;
+        destRect.y = static_cast<int>(transform->position.y); // - Game::camera.y;
         destRect.w = transform->width * transform->scale;
         destRect.h = transform->height * transform->scale;
     }
 
     void draw() override {
-        TextureManager::Draw(texture, srcRect, destRect, spriteFlip);
+        TextureManager::Draw(texture, srcRect, srcRect, spriteFlip);
     }
 
     void play(const char* animName) {
