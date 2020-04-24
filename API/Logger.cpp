@@ -8,7 +8,7 @@ Logger::LogLevel Logger::logLevel = Logger::LogLevel::INFO;
 // std::mutex Logger::mtx;
 
 std::string Logger::descriptor() {
-    return "(You didn't changed the descriptor!)";
+    return "(Logger)";
 }
 
 std::string Logger::object_descriptor() {
@@ -67,4 +67,10 @@ std::string Logger::pointer_str(void* ptr) {
     std::stringstream ss;
     ss << ptr;
     return "{" + ss.str() + "}";
+}
+
+void Logger::static_log(LogLevel ll, const std::string& msg) {
+    // Tout ce qui se passe ici, reste ici
+    Logger l;
+    l.log(ll, msg);
 }

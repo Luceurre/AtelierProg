@@ -45,6 +45,8 @@ protected:
     void fatal(const std::string& msg);
     // Generate s string that can describe the object (by default memory address).
     std::string object_descriptor();
+
+    static void static_log(LogLevel ll, const std::string& msg);
 };
 
 
