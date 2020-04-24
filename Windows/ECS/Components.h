@@ -9,3 +9,4 @@
 #include "ColliderComponent.h"
 #include "TileComponent.h"
 #include "MouseComponent.h"
+#include "ClickableComponent.h"

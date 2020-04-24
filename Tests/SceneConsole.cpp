@@ -203,5 +203,6 @@ void SceneConsole::list_consoles(Console *c, const std::vector<std::string>& arg
     Console::get_consoles_name(consolesName);
     for(const auto& name : consolesName) {
         output << name << std::endl;
+        std::cout << name << std::endl;
     }
 }
