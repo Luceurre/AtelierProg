@@ -21,7 +21,7 @@ link_directories (${SDL2_LIBRARY_DIRS}
 
 # On récupère tous les fichiers .cpp et .h
 SET(PIERRE_SRC_DIR API)
-SET(PIERRE_SRC ${PIERRE_SRC_DIR}/Console.h ${PIERRE_SRC_DIR}/Console.cpp ${PIERRE_SRC_DIR}/Game.cpp ${PIERRE_SRC_DIR}/Game.h ${PIERRE_SRC_DIR}/Logger.cpp ${PIERRE_SRC_DIR}/Logger.h ${PIERRE_SRC_DIR}/Scene.cpp ${PIERRE_SRC_DIR}/Scene.h ${PIERRE_SRC_DIR}/SceneLogic.h ${PIERRE_SRC_DIR}/SceneLogic.cpp ${PIERRE_SRC_DIR}/SceneManager.cpp ${PIERRE_SRC_DIR}/SceneManager.h ${PIERRE_SRC_DIR}/SceneView.cpp ${PIERRE_SRC_DIR}/SceneView.h ${PIERRE_SRC_DIR}/tools.cpp ${PIERRE_SRC_DIR}/tools.h ${PIERRE_SRC_DIR}/Window.cpp ${PIERRE_SRC_DIR}/Window.h ${PIERRE_SRC_DIR}/WindowManager.cpp ${PIERRE_SRC_DIR}/WindowManager.h API/MouseHandler.cpp API/MouseHandler.h)
+SET(PIERRE_SRC ${PIERRE_SRC_DIR}/Console.h ${PIERRE_SRC_DIR}/Console.cpp ${PIERRE_SRC_DIR}/Game.cpp ${PIERRE_SRC_DIR}/Game.h ${PIERRE_SRC_DIR}/Logger.cpp ${PIERRE_SRC_DIR}/Logger.h ${PIERRE_SRC_DIR}/Scene.cpp ${PIERRE_SRC_DIR}/Scene.h ${PIERRE_SRC_DIR}/SceneLogic.h ${PIERRE_SRC_DIR}/SceneLogic.cpp ${PIERRE_SRC_DIR}/SceneManager.cpp ${PIERRE_SRC_DIR}/SceneManager.h ${PIERRE_SRC_DIR}/SceneView.cpp ${PIERRE_SRC_DIR}/SceneView.h ${PIERRE_SRC_DIR}/tools.cpp ${PIERRE_SRC_DIR}/tools.h ${PIERRE_SRC_DIR}/Window.cpp ${PIERRE_SRC_DIR}/Window.h ${PIERRE_SRC_DIR}/WindowManager.cpp ${PIERRE_SRC_DIR}/WindowManager.h API/MouseHandler.cpp API/MouseHandler.h API/EventManager.cpp API/EventManager.h)
 SET(PIERRE_TEST_DIR Tests)
 SET(PIERRE_TEST_SRC ${PIERRE_TEST_DIR}/SceneConsole.cpp ${PIERRE_TEST_DIR}/SceneConsole.h Tests/SceneMenu.cpp Tests/SceneMenu.h)
 
