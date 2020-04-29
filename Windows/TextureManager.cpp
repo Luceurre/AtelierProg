@@ -3,6 +3,7 @@
 //
 
 #include "TextureManager.h"
+#include "../API/Logger.h"
 
 std::map<std::string, SDL_Surface *> TextureManager::textures;
 

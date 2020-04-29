@@ -3,15 +3,15 @@
 //
 
 #include "SDL.h"
-#include "Windows/Game.h"
+// #include "Windows/Game.h"
 // #include <fstream>
-// #include "MapEditor/MapEditor.h"
+#include "Windows/MapEditor/MapEditor.h"
 
-Game *game = nullptr;
+// Game *game = nullptr;
 
 int main(int argc, char *argv[])
 {
-    const int FPS = 60;
+    /*const int FPS = 60;
     const int frameDelay = 1000 / FPS;
 
     Uint32 frameStart;
@@ -36,9 +36,9 @@ int main(int argc, char *argv[])
         }
     }
 
-    game->clean();
+    game->clean(); */
 
-    // test();
+    test();
 
     return 0;
 }

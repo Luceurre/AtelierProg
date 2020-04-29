@@ -12,25 +12,28 @@ void test() {
     SDL_Window *window;                    // Declare a pointer
     SDL_Window *window2;
 
+    SDL_DisplayMode current;
     SDL_Init(SDL_INIT_VIDEO);              // Initialize SDL2
+
+    SDL_GetCurrentDisplayMode(0, &current);
 
     // Create an application window with the following settings:
     window = SDL_CreateWindow(
             "An SDL2 window",                  // window title
-            SDL_WINDOWPOS_UNDEFINED,           // initial x position
-            SDL_WINDOWPOS_UNDEFINED,           // initial y position
-            640,                               // width, in pixels
-            480,                               // height, in pixels
+            0,           // initial x position
+            0,           // initial y position
+            current.w/3,                               // width, in pixels
+            current.h,                               // height, in pixels
             SDL_WINDOW_RESIZABLE                  // flags - see below
 
     );
 
     window2 = SDL_CreateWindow(
             "An SDL2 window2",                  // window title
-            SDL_WINDOWPOS_UNDEFINED,           // initial x position
-            SDL_WINDOWPOS_UNDEFINED,           // initial y position
-            640,                               // width, in pixels
-            480,                               // height, in pixels
+            current.w/3,           // initial x position
+            0,           // initial y position
+            2*current.w/3,                               // width, in pixels
+            current.h,                               // height, in pixels
             SDL_WINDOW_RESIZABLE                  // flags - see below
 
     );
