@@ -10,11 +10,12 @@
     #include <Ws2tcpip.h>
 #elif __unix
     #include <arpa/inet.h>
-    #include <pcap/socket.h>
+    #include <sys/socket.h>
     #include <string.h>
 #include <unistd.h>
 
     #define closesocket close
+#define SOCKET int
 #endif
 
 #define PORT 1234
