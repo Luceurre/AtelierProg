@@ -8,6 +8,7 @@
 #ifdef WIN64
     #include <winsock2.h>
     #include <Ws2tcpip.h>
+    #define ADDR_SIZE int
 #elif __unix
     #include <arpa/inet.h>
     #include <sys/socket.h>
@@ -16,6 +17,7 @@
 
     #define closesocket close
 #define SOCKET int
+#define AADDR_SIZE unsigned int
 #endif
 
 #define PORT 1234
@@ -156,7 +158,7 @@ void server() {
 
     socket_lock.unlock();
 
-    unsigned int addr_length = sizeof(address);
+    ADDR_SIZE addr_length = sizeof(address);
     int nouvelle_chaussette = accept(chaussette, (sockaddr *) &address, &addr_length);
     if (nouvelle_chaussette<0) {
         lock.lock();
