@@ -50,5 +50,6 @@ target_link_libraries (PierreSandbox ${SDL2_LIBRARIES}
 target_link_libraries (JulienSandbox ${SDL2_LIBRARIES}
         ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES})
 
-
-target_link_libraries(NetworkSandbox ws2_32)
+IF (WIN64)
+    target_link_libraries(NetworkSandbox ws2_32)
+ENDIF()

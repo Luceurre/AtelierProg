@@ -8,6 +8,13 @@
 #ifdef WIN64
     #include <winsock2.h>
     #include <Ws2tcpip.h>
+#elif __unix
+    #include <arpa/inet.h>
+    #include <pcap/socket.h>
+    #include <string.h>
+#include <unistd.h>
+
+    #define closesocket close
 #endif
 
 #define PORT 1234
@@ -19,6 +26,7 @@ void client();
 void server();
 
 mutex out_stream_mutex;
+mutex socket_creation;
 
 int main(int argc, char* argv[]) {
     #ifdef WIN64
@@ -32,9 +40,9 @@ int main(int argc, char* argv[]) {
         }
     #endif
 
-
-    thread client_thread(&client);
     thread server_thread(&server);
+    thread client_thread(&client);
+
 
     client_thread.join();
     server_thread.join();
@@ -75,7 +83,9 @@ void client() {
         return;
     }
 
+    unique_lock<mutex> socket_lock(socket_creation);
     int connect_result = connect(chaussette, (struct sockaddr *)&serv_address, sizeof(serv_address));
+    socket_creation.unlock();
     if (connect_result < 0) {
         lock.lock();
         cout << "(Client) Connection failed!" << endl;
@@ -88,9 +98,12 @@ void client() {
     }
 
     send(chaussette, msg, strlen(msg), 0);
+    closesocket(chaussette);
 }
 
 void server() {
+    unique_lock<mutex> socket_lock(socket_creation);
+
     sockaddr_in address;
     int buffer_size = 256;
     char buffer[buffer_size];
@@ -123,6 +136,7 @@ void server() {
     if(bind_result < 0) {
         lock.lock();
         cout << "(Server) Couldn't bind socket!" << endl;
+        cout << strerror(errno) << endl;
         lock.unlock();
         return;
     } else {
@@ -139,7 +153,9 @@ void server() {
         return;
     }
 
-    int addr_length = sizeof(address);
+    socket_lock.unlock();
+
+    unsigned int addr_length = sizeof(address);
     int nouvelle_chaussette = accept(chaussette, (sockaddr *) &address, &addr_length);
     if (nouvelle_chaussette<0) {
         lock.lock();
