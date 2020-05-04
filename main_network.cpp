@@ -17,11 +17,15 @@
 
     #define closesocket close
 #define SOCKET int
-#define AADDR_SIZE unsigned int
+#define ADDR_SIZE unsigned int
 #endif
 
 #define PORT 1234
 
+#include "Network/Server.h"
+#include "Network/Client.h"
+
+#include <vector>
 
 using namespace std;
 
@@ -42,13 +46,43 @@ int main(int argc, char* argv[]) {
             return -1;
         }
     #endif
+        // C'est parti pour quelques tests !
 
-    thread server_thread(&server);
-    thread client_thread(&client);
+         Server serv(1234);
+         serv.initialize();
+
+        // serv.wait_til_accept_connection();
+        sleep(1);
+
+        Client client1("127.0.0.1", 1234);
+        client1.initialize();
+        Client client2("127.0.0.1", 1234);
+    client2.initialize();
+
+        client1.send_message("Hello from Client 1!", MESSAGE_SIZE);
+ sleep(10);
+    client1.send_message("I'm willing to try something!", MESSAGE_SIZE);
+
+        std::string msg;
+
+        while (msg != "quit") {
+            cin >> msg;
+            char* msg_c = const_cast<char *>(msg.c_str());
+            std::cout << "Client 1 said : " << msg_c << std::endl;
+            client2.send_message(msg_c, MESSAGE_SIZE);
+        }
 
 
-    client_thread.join();
-    server_thread.join();
+        // client2.send_message("Va te faire enculer :)", MESSAGE_SIZE);
+        /*
+        vector<Client> clients;
+
+        for(int i = 0; i < 8; ++i) {
+            clients.emplace_back("127.0.0.1", 1234);
+            clients.back().initialize();
+        }
+        */
+        // clients.back().send_message("Hello World!", MESSAGE_SIZE);
 
     return 0;
 }
@@ -58,7 +92,7 @@ void client() {
 
     sockaddr_in serv_address;
     unique_lock<mutex> lock(out_stream_mutex);
-    cout << "I'm client!" << endl;
+    cout << "I'm client!"  << endl;
     lock.unlock();
 
     // Voir serveur, c'est la même chose ici
@@ -158,6 +192,8 @@ void server() {
 
     socket_lock.unlock();
 
+    cout << "Does it wait ?" << endl;
+
     ADDR_SIZE addr_length = sizeof(address);
     int nouvelle_chaussette = accept(chaussette, (sockaddr *) &address, &addr_length);
     if (nouvelle_chaussette<0) {
@@ -172,9 +208,10 @@ void server() {
     }
 
 
-
-    int valread = recv(nouvelle_chaussette, buffer, buffer_size, 0);
-    cout << "(Server) Message received : " << buffer << endl;
+    for(int i = 0; i < 2; ++i) {
+        int valread = recv(nouvelle_chaussette, buffer, buffer_size, 0);
+        cout << "(Server) Message received : " << buffer << endl;
+    }
 
     closesocket(nouvelle_chaussette);
     closesocket(chaussette);

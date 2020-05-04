@@ -25,7 +25,7 @@ SET(PIERRE_SRC ${PIERRE_SRC_DIR}/Console.h ${PIERRE_SRC_DIR}/Console.cpp ${PIERR
 SET(PIERRE_TEST_DIR Tests)
 SET(PIERRE_TEST_SRC ${PIERRE_TEST_DIR}/SceneConsole.cpp ${PIERRE_TEST_DIR}/SceneConsole.h Tests/SceneMenu.cpp Tests/SceneMenu.h)
 SET(NETWORK_SANDBOX_DIR Network)
-SET(NETWORK_SANDBOX_SRC)
+SET(NETWORK_SANDBOX_SRC Network/Server.cpp Network/Server.h Network/Bridge.cpp Network/Bridge.h Network/cross_socket.h Network/Client.cpp Network/Client.h Network/cross_socket.cpp)
 
 # De même pour Julien
 SET(JULIEN_SRC_DIR Windows)
@@ -41,13 +41,15 @@ add_executable(PierreSandbox main_pierre.cpp ${PIERRE_SRC} ${PIERRE_TEST_SRC}  $
 add_executable(JulienSandbox main_julien.cpp ${JULIEN_SRC} ${JULIEN_ECS_SRC} ${PIERRE_SRC} ${PIERRE_TEST_SRC})
 
 add_executable(MathisSandbox main_mathis.cpp options/parser.cpp options/parser.h options/options.cpp options/options.h API/Logger.cpp API/Logger.h)
-add_executable(NetworkSandbox main_network.cpp ${NETWORK_SANDBOX_SRC})
+add_executable(NetworkSandbox main_network.cpp ${NETWORK_SANDBOX_SRC} ${PIERRE_SRC})
 
 target_link_libraries (MathisSandbox ${SDL2_LIBRARIES}
         ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES})
 target_link_libraries (PierreSandbox ${SDL2_LIBRARIES}
         ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES})
 target_link_libraries (JulienSandbox ${SDL2_LIBRARIES}
+        ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES})
+target_link_libraries (NetworkSandbox ${SDL2_LIBRARIES}
         ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES})
 
 IF (WIN64 OR WIN32)
