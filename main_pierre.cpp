@@ -19,7 +19,7 @@ int main(int argc, char* argv[]) {
         exit(-1);
     }
 
-    auto* scene = new SceneMenu();
+    auto* scene = new SceneConsole();
     scene->initialize();
 
     scene->run();

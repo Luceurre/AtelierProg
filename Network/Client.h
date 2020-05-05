@@ -1,36 +1,30 @@
 //
-// Created by pglandon on 5/2/20.
+// Created by pglandon on 5/4/20.
 //
 
-#ifndef ATELIERPROG_CLIENT_H
+#ifndef ATELIERPROG_OLDCLIENT_H
 #define ATELIERPROG_CLIENT_H
 
-#include <string>
 #include <thread>
-
-#include "cross_socket.h"
-#include "../API/Logger.h"
+#include "sockets_helper.h"
+#include "server_events.h"
+#include "EventRegister.h"
 
 class Client : protected Logger {
-    sockaddr_in server_addr;
-    SOCKET input_socket;
-    SOCKET output_socket;
-    bool listening;
-    ID id;
-
-    std::thread receive_thread;
-
-    void identification();
-    void make_sockets();
+cross_socket client_socket;
+void handle_recv();
+bool listening;
+EventRegister* er;
+thread recvThread;
+std::string descriptor();
 
 public:
-    Client(const char* ip, int port);
+    Client();
     ~Client();
 
-    void initialize();
-    void receive();
-    void send_message(char* buffer, int buffer_size);
+    void send_cstring(char* buffer, int buffer_size);
+    void connect();
 };
 
 
-#endif //ATELIERPROG_CLIENT_H
+#endif //ATELIERPROG_OLDCLIENT_H

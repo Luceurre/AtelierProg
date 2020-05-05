@@ -1,106 +1,70 @@
 //
-// Created by pglandon on 5/2/20.
+// Created by pglandon on 5/4/20.
 //
 
 #include "Client.h"
 
-Client::Client(const char* ip, int port) {
-    server_addr = {};
-    server_addr.sin_family = PROTOCOL;
-    server_addr.sin_port = htons(port);
-    inet_pton(AF_INET, ip, &server_addr.sin_addr);
+// TODO : add timeout
+// TODO : add select or poll implementation
 
-    this->input_socket = socket(PROTOCOL, PROTOCOL_WRAPPER, 0);
-    this->output_socket = socket(PROTOCOL, PROTOCOL_WRAPPER, 0);
-    id = NO_ID;
-}
-
-void Client::initialize() {
-    identification();
-    make_sockets();
-
-    listening = true;
-    receive_thread = std::thread(&Client::receive, this);
-    /*
-    if (connect(client_socket, (sockaddr *)&server_addr, sizeof(server_addr)) < 0) {
-        error("Couldn't connect to server : ");
-        error(strerror(errno));
-        return;
-    } else {
-        info("Connection succeed!");
-    }
-
-    // La
-
-
-     */
-}
-
-void Client::receive() {
+void Client::handle_recv() {
+    SDL_Event event;
+    int status;
     while (listening) {
-        sleep(1);
+        status = recv(client_socket, &event, sizeof event, 0);
+        if (status < 0) {
+            cout << "client: error recv" << endl;
+            break;
+        }
 
-        char buffer[MESSAGE_SIZE];
-        info("I'm listening");
-        recv(output_socket, buffer, MESSAGE_SIZE, 0);
+        SDL_Event event_askconnect;
+        SDL_Event event_connect;
+        er->fill_event(AskConnected, &event_askconnect);
+        er->fill_event(Connected, &event_connect);
 
-        info(buffer);
+        if (event.type == event_askconnect.type) {
+            cout << "Healthchecks works :)" << endl;
+            send(client_socket, &event_connect, sizeof event_askconnect, 0);
+        }
     }
 }
 
-void Client::send_message(char *buffer, int buffer_size) {
-    info("I'm sending!");
-    send(input_socket, buffer, buffer_size, 0);
+void Client::send_cstring(char *buffer, int buffer_size) {
+    int status = send(client_socket, buffer, buffer_size, 0);
+    if (status == -1) {
+        cout << "client: cannot send cstring" << endl;
+    }
+}
+
+Client::Client() {
+    client_socket = get_client_udp_socket("cxhome.org", "2020");
+    er = &EventRegister::getInstance();
+
+    registerNetworkEvents();
+
+    recvThread = thread(&Client::handle_recv, this);
 }
 
 Client::~Client() {
     listening = false;
-    close(input_socket);
-    close(output_socket);
-
-    receive_thread.join();
-}
-
-// TODO : check if identification actually succeed...
-void Client::identification() {
-    SOCKET client_socket = socket(PROTOCOL, PROTOCOL_WRAPPER, 0);;
-
-    if (connect(client_socket, (sockaddr *)&server_addr, sizeof(server_addr)) < 0) {
-        error("Couldn't connect to server : ");
-        error(strerror(errno));
-        return;
-    }
-    info("Connection succeed! Begins identification");
-    ID_Wrapper new_id{NOT_IDENTIFIED, NO_ID, NONE};
-
-    // On envoie le message comme quoi c'est la 1ere fois que l'on se connecte.
-    send(client_socket, &new_id, sizeof(new_id), 0);
-    // On recoit notre identification pour discuter avec le serveur.
-    recv(client_socket, &id, sizeof(id), 0);
-
     close(client_socket);
 
-    info("Identification succeed! Client id is : " + std::to_string(id));
+    if (recvThread.joinable())
+        recvThread.join();
 }
 
-void Client::make_sockets() {
-    if (id == NO_ID) {
-        error("Client is not identified yet, call identification() first!");
-        return;
-    }
-    if (connect(input_socket, (sockaddr *)&server_addr, sizeof(server_addr)) < 0) {
-        error("Couldn't connect to server : ");
-        error(strerror(errno));
-        return;
-    }
-    ID_Wrapper inputWrapper{IDENTIFIED, id, INPUT_SOCKET};
-    send(input_socket, &inputWrapper, sizeof(inputWrapper), 0);
+void Client::connect() {
+    SDL_Event eco;
+    er->fill_event(Connected, &eco);
 
-    if (connect(output_socket, (sockaddr *)&server_addr, sizeof(server_addr)) < 0) {
-        error("Couldn't connect to server : ");
-        error(strerror(errno));
-        return;
+    int status = send(client_socket, &eco, sizeof eco, 0);
+    if (status < 0) {
+        cout << "client: failed send" << endl;
+    } else {
+        cout << "client: sending something..." << endl;
     }
-    ID_Wrapper outputWrapper{IDENTIFIED, id, OUTPUT_SOCKET};
-    send(output_socket, &outputWrapper, sizeof(outputWrapper), 0);
+}
+
+std::string Client::descriptor() {
+    return "(Client)";
 }

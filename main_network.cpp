@@ -20,12 +20,11 @@
 #define ADDR_SIZE unsigned int
 #endif
 
-#define PORT 1234
-
 #include "Network/Server.h"
 #include "Network/Client.h"
 
 #include <vector>
+#include <SDL.h>
 
 using namespace std;
 
@@ -48,34 +47,11 @@ int main(int argc, char* argv[]) {
     #endif
         // C'est parti pour quelques tests !
 
-         Server serv(1234);
-         serv.initialize();
-
-        // serv.wait_til_accept_connection();
-        sleep(1);
-
-        Client client1("127.0.0.1", 1234);
-        client1.initialize();
-        Client client2("127.0.0.1", 1234);
-    client2.initialize();
-
-        client1.send_message("Hello from Client 1!", MESSAGE_SIZE);
- sleep(10);
-    client1.send_message("I'm willing to try something!", MESSAGE_SIZE);
-
-        std::string msg;
-
-        while (msg != "quit") {
-            cin >> msg;
-            char* msg_c = const_cast<char *>(msg.c_str());
-            std::cout << "Client 1 said : " << msg_c << std::endl;
-            client2.send_message(msg_c, MESSAGE_SIZE);
-        }
 
 
         // client2.send_message("Va te faire enculer :)", MESSAGE_SIZE);
         /*
-        vector<Client> clients;
+        vector<OldClient> clients;
 
         for(int i = 0; i < 8; ++i) {
             clients.emplace_back("127.0.0.1", 1234);
@@ -84,8 +60,23 @@ int main(int argc, char* argv[]) {
         */
         // clients.back().send_message("Hello World!", MESSAGE_SIZE);
 
+        SDL_Init(SDL_INIT_EVERYTHING);
+
+
+
+        Server srv;
+        // srv.wait();
+        sleep(1);
+        Client clt;
+        // clt.send_cstring("Hello, World!", 13);
+        clt.connect();
+
+        srv.wait();
+
     return 0;
 }
+
+/*
 
 void client() {
     char *msg = "Hello from client!";
@@ -99,12 +90,12 @@ void client() {
     SOCKET chaussette = socket(AF_INET, SOCK_STREAM, 0);
     if(chaussette < 0) {
         lock.lock();
-        cout << "(Client) Couldn't create socket!" << endl;
+        cout << "(OldClient) Couldn't create socket!" << endl;
         lock.unlock();
         return;
     } else {
         lock.lock();
-        cout << "(Client) Socket created!" << endl;
+        cout << "(OldClient) Socket created!" << endl;
         lock.unlock();
     }
 
@@ -115,7 +106,7 @@ void client() {
     if(inet_pton(AF_INET, "127.0.0.1", &serv_address.sin_addr)<=0)
     {
         lock.lock();
-        cout << "(Client) Invalid address!" << endl;
+        cout << "(OldClient) Invalid address!" << endl;
         lock.unlock();
         return;
     }
@@ -125,12 +116,12 @@ void client() {
     socket_creation.unlock();
     if (connect_result < 0) {
         lock.lock();
-        cout << "(Client) Connection failed!" << endl;
+        cout << "(OldClient) Connection failed!" << endl;
         lock.unlock();
         return;
     } else {
         lock.lock();
-        cout << "(Client) Connection succeed!" << endl;
+        cout << "(OldClient) Connection succeed!" << endl;
         lock.unlock();
     }
 
@@ -216,4 +207,4 @@ void server() {
     closesocket(nouvelle_chaussette);
     closesocket(chaussette);
     return;
-}
+} */

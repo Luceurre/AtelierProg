@@ -25,7 +25,7 @@ SET(PIERRE_SRC ${PIERRE_SRC_DIR}/Console.h ${PIERRE_SRC_DIR}/Console.cpp ${PIERR
 SET(PIERRE_TEST_DIR Tests)
 SET(PIERRE_TEST_SRC ${PIERRE_TEST_DIR}/SceneConsole.cpp ${PIERRE_TEST_DIR}/SceneConsole.h Tests/SceneMenu.cpp Tests/SceneMenu.h)
 SET(NETWORK_SANDBOX_DIR Network)
-SET(NETWORK_SANDBOX_SRC Network/Server.cpp Network/Server.h Network/Bridge.cpp Network/Bridge.h Network/cross_socket.h Network/Client.cpp Network/Client.h Network/cross_socket.cpp)
+SET(NETWORK_SANDBOX_SRC Network/sockets_helper.cpp Network/sockets_helper.h Network/Server.cpp Network/Server.h Network/Client.cpp Network/Client.h Network/EventRegister.cpp Network/EventRegister.h Network/server_events.cpp Network/server_events.h)
 
 # De même pour Julien
 SET(JULIEN_SRC_DIR Windows)
