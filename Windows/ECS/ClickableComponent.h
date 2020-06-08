@@ -43,6 +43,9 @@ public:
                 spriteComponent->texture = hovered_texture;
                 hovered_texture = tempTexture;
             }
+            if(hovered){
+
+            }
           }
       } else {
     hovered = false;

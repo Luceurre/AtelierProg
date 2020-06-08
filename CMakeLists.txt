@@ -38,9 +38,9 @@ SET(JULIEN_ECS_SRC ${JULIEN_SRC_DIR}/${JULIEN_ECS_DIR}/Animation.h ${JULIEN_SRC_
 
 add_executable(PierreSandbox main_pierre.cpp ${PIERRE_SRC} ${PIERRE_TEST_SRC}  ${JULIEN_ECS_SRC} ${JULIEN_SRC})
 # add_executable(JulienSandbox main_julien.cpp Windows/Game.cpp Windows/Game.h Windows/TextureManager.h Windows/TextureManager.cpp Windows/Map.h Windows/Map.cpp Windows/ECS/ECS.h Windows/ECS/Components.h Windows/ECS/SpriteComponent.h Windows/ECS/TransformComponent.h Windows/Vector2D.h Windows/Vector2D.cpp Windows/ECS/KeyboardController.h Windows/Collision.h Windows/Collision.cpp Windows/ECS/ECS.cpp Windows/ECS/Animation.h Windows/ECS/MouseComponent.h MapEditor/MapEditor.h MapEditor/MapEditor.cpp)
-add_executable(JulienSandbox main_julien.cpp ${JULIEN_SRC} ${JULIEN_ECS_SRC} ${PIERRE_SRC} ${PIERRE_TEST_SRC})
+add_executable(JulienSandbox main_julien.cpp ${JULIEN_SRC} ${JULIEN_ECS_SRC} ${PIERRE_SRC} ${PIERRE_TEST_SRC} Events/Callback.hpp)
 
-add_executable(MathisSandbox main_mathis.cpp options/parser.cpp options/parser.h options/options.cpp options/options.h API/Logger.cpp API/Logger.h)
+add_executable(MathisSandbox main_mathis.cpp options/parser.cpp options/parser.h options/options.cpp options/options.h API/Logger.cpp API/Logger.h Events/Event.h Events/EventCore.h Events/KeyEvent.h Events/KeyCode.h Events/EventManager.h Events/EventTests.h Events/Callback.hpp Events/EventIncluder.h)
 add_executable(NetworkSandbox main_network.cpp ${NETWORK_SANDBOX_SRC} ${PIERRE_SRC})
 
 target_link_libraries (MathisSandbox ${SDL2_LIBRARIES}

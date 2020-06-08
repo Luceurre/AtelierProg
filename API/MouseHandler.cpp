@@ -9,4 +9,13 @@ void MouseHandler::handle_mouse(SDL_Event *event) {
         mouseX = event->motion.x;
         mouseY = event->motion.y;
     }
+    if(event->type == SDL_BUTTON_LEFT) {
+        click = 1;
+    }
+    if( event->type == SDL_BUTTON_RIGHT){
+        click = 2;
+    }
+    if(event->type == SDL_BUTTON_MIDDLE){
+        click = 3;
+    }
 }

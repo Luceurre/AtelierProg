@@ -12,6 +12,7 @@ class MouseHandler {
 protected:
     int mouseX;
     int mouseY;
+    int click;
 
     void handle_mouse(SDL_Event* event);
 };

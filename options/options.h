@@ -21,7 +21,7 @@ public:
     void write(const std::string& nom); //Method to write file from opt
     void set_option(const std::string& key,const std::string& value);    //Change an option value
     std::string get_option(const std::string& key);     //Get a current option value
-    void add_option(const std::string& key,const std::string& value);
+    void add_option(const std::string& key,const std::string value);
 };
 
 
